@@ -15,7 +15,7 @@ Copy config example to your home directory:
 
 ```cp .pyvpn.example ~/.pyvpn```
 
-Then adjust config options, if you live some options empty script will prompt for them.
+Then adjust config options, if you keep some options empty, script will prompt for them.
 
 #Thanks:
 
