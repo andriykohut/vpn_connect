@@ -1,0 +1,11 @@
+[softtoken]
+user      = softtoken_user
+wine      = wine64
+consoleui = "/home/user/.wine/drive_c/Program Files (x86)/Secure Computing/SofToken-II/Console_UI.exe"
+password  = softtoken_password
+
+[vpnc]
+gateway  = some-vpn-gateway.anything.com
+id       = some_vpn_id
+username = vpn_user
+secret   = vpn_group_secret
