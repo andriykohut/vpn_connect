@@ -4,6 +4,8 @@ vpn_connect
 VPN autoconnection script with SoftToken.
 
 #Requirements:
+* vpnc
+* SoftToken II with ConsoleUI running on wine
 * pexpect
 * python-appindicator (for vpn indicator in ubuntu)
 
