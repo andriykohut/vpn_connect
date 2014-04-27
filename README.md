@@ -9,6 +9,7 @@ VPN autoconnection script with SoftToken.
 
 #Installation:
 Just run pyvpn.py script, try ```pyvpn.py -h``` for help.
+If you want vpn indicator for ubuntu, add indicator-vpnc.py to your startup applications.
 
 #Config:
 Copy config example to your home directory:
