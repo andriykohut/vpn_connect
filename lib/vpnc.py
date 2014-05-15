@@ -31,7 +31,7 @@ class VPNConnect(object):
         child.expect('Enter password for %s' % self.username)
         child.sendline(token)
         child.expect('VPNC started in background')
-        print 'Connected!'
+        return True
 
     @staticmethod
     def get_pid():
