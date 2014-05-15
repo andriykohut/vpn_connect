@@ -1,12 +1,13 @@
 #!/usr/bin/env python2
 import sys
 import os
+import getpass
 from os.path import dirname, abspath
 libpath = os.path.join(dirname(dirname(abspath(__file__))), 'lib')
 sys.path.append(libpath)
 from optparse import OptionParser
 from ConfigParser import ConfigParser
-import getpass
+from colors import colors
 
 from softtoken import SoftToken
 from vpnc import VPNConnect
@@ -21,6 +22,7 @@ HUMAN_READABLE_NAMES = {
     'id': 'VPN cluster id',
     'wine': 'wine executable',
 }
+
 
 def get_opts():
     parser = OptionParser()
@@ -61,9 +63,9 @@ if __name__ == '__main__':
     if opts['status']:
         pid = VPNConnect.get_pid()
         if pid:
-            print 'vpnc running with PID %s' % pid
+            print 'vpnc running with PID %s' % colors.green(pid)
         else:
-            print 'vpnc is not running'
+            print colors.red('vpnc is not running')
         sys.exit(0)
     config = get_config(os.path.expanduser((opts['config'])))
     for key, value in opts.items():
@@ -72,12 +74,13 @@ if __name__ == '__main__':
     for unhuman, human in HUMAN_READABLE_NAMES.items():
         if not config[unhuman]:
             if ('password' in unhuman) or ('secret' in unhuman):
-                config[unhuman] = getpass.getpass('Please enter %s: ' % human)
+                config[unhuman] = getpass.getpass('Please enter %s: ' % colors.yellow(human))
             else:
-                config[unhuman] = raw_input('Please enter %s: ' % human)
+                config[unhuman] = raw_input('Please enter %s: ' % colors.yellow(human))
     token = SoftToken(config['tuser'], config['consoleui'], config['wine'])
     vpnpassword = token.get_password(config['tpassword'])
     vpnc = VPNConnect(config['id'], config['gateway'],
                       config['secret'], config['vuser'])
-    sudo_pass = getpass.getpass('Enter password for %s: ' % getpass.getuser())
-    vpnc.vpn_connect(sudo_pass, vpnpassword)
+    sudo_pass = getpass.getpass('Enter password for %s: ' % colors.cyan(getpass.getuser()))
+    if vpnc.vpn_connect(sudo_pass, vpnpassword) is True:
+        print colors.green('Connected!')
