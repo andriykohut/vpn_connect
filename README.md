@@ -7,7 +7,10 @@ VPN autoconnection script with SoftToken.
 * vpnc
 * SoftToken II with ConsoleUI running on wine
 * pexpect
+
+#Optional requirements:
 * python-appindicator (for vpn indicator in ubuntu)
+* xclip (to copy SoftToken passwords to clipboard)
 
 #Installation:
 Just run pyvpn.py script, try ```pyvpn.py -h``` for help.
