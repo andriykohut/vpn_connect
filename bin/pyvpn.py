@@ -6,8 +6,8 @@ from os.path import dirname, abspath
 libpath = os.path.join(dirname(dirname(abspath(__file__))), 'lib')
 sys.path.append(libpath)
 from optparse import OptionParser
-from ConfigParser import ConfigParser
 from colors import colors
+from config import get_config
 
 from softtoken import SoftToken
 from vpnc import VPNConnect
@@ -43,21 +43,6 @@ def get_opts():
     return parser.parse_args()[0].__dict__
 
 
-def get_config(path):
-    parser = ConfigParser()
-    parser.read(path)
-    config = {}
-    config['tuser'] = parser.get('softtoken', 'user')
-    config['tpassword'] = parser.get('softtoken', 'password')
-    config['wine'] = parser.get('softtoken', 'wine')
-    config['consoleui'] = parser.get('softtoken', 'consoleui')
-    config['gateway'] = parser.get('vpnc', 'gateway')
-    config['id'] = parser.get('vpnc', 'id')
-    config['vuser'] = parser.get('vpnc', 'username')
-    config['secret'] = parser.get('vpnc', 'secret')
-    return config
-
-
 if __name__ == '__main__':
     opts = get_opts()
     if opts['status']:
@@ -74,13 +59,19 @@ if __name__ == '__main__':
     for unhuman, human in HUMAN_READABLE_NAMES.items():
         if not config[unhuman]:
             if ('password' in unhuman) or ('secret' in unhuman):
-                config[unhuman] = getpass.getpass('Please enter %s: ' % colors.yellow(human))
+                config[unhuman] = getpass.getpass(
+                    'Please enter %s: ' % colors.yellow(human)
+                )
             else:
-                config[unhuman] = raw_input('Please enter %s: ' % colors.yellow(human))
+                config[unhuman] = raw_input(
+                    'Please enter %s: ' % colors.yellow(human)
+                )
     token = SoftToken(config['tuser'], config['consoleui'], config['wine'])
     vpnpassword = token.get_password(config['tpassword'])
     vpnc = VPNConnect(config['id'], config['gateway'],
                       config['secret'], config['vuser'])
-    sudo_pass = getpass.getpass('Enter password for %s: ' % colors.cyan(getpass.getuser()))
+    sudo_pass = getpass.getpass(
+        'Enter password for %s: ' % colors.cyan(getpass.getuser())
+    )
     if vpnc.vpn_connect(sudo_pass, vpnpassword) is True:
         print colors.green('Connected!')
