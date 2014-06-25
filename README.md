@@ -8,6 +8,29 @@ VPN autoconnection script with SoftToken.
 * SoftToken II with ConsoleUI running on wine
 * pexpect
 
+#Usage
+```
+./pyvpn.py -h
+Usage: pyvpn.py [options]
+
+Options:
+  -h, --help            show this help message and exit
+  --config=CONFIG       Specify config file path, default "~/.pyvpn"
+  --tuser=TUSER         SoftToken username
+  --tpassword=TPASSWORD
+                        SoftToken password
+  --wine=WINE           Select wine version
+  --consoleui=CONSOLEUI
+                        A path to SoftToken consoleui
+  --gateway=GATEWAY     Gateway hostname
+  --id=ID               VPN cluster id
+  --vuser=VUSER         VPN user name
+  --secret=SECRET       VPN cluster secret
+  --status              Display VPN status.
+  --getpass             Print SoftToken password
+  --copypass            Copy SoftToken password to clipboard
+```
+
 #Optional requirements:
 * python-appindicator (for vpn indicator in ubuntu)
 * xclip (to copy SoftToken passwords to clipboard)
