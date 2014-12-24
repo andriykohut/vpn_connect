@@ -31,7 +31,7 @@ def main():
         copy_to_clipboard(password)
         notification = Notify.Notification.new(
             "SoftToken",
-            "PIN copied to clipboard",
+            "VPN password copied to clipboard",
             "dialog-information"
         )
         notification.show()
